@@ -14,7 +14,7 @@ An Authentication Application Template for using react and nestjs
    $ cd server
    $ npm install
 ```
-## Set Enviroment for secret key JWT and other configurations
+## Set Enviroment for secret key JWT
 
 ```bash
    $ cp .dev.example .env
