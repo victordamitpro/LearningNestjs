@@ -1,0 +1,23 @@
+### Register new user
+POST http://localhost:5001/api/auth/register
+content-type: application/json
+
+{
+    "email": "test@test.com",
+    "password": "123456",
+    "firstname": "hoang1",
+    "lastname": "dt1",
+    "username": "hoangdt1dxs",
+    "phone": "+84915252698"
+}
+
+
+### Login with user name and pass
+# @name login
+POST http://localhost:5001/api/auth/login
+content-type: application/json
+
+{
+    "email": "test1@test.com",
+    "password": "123456"
+}
