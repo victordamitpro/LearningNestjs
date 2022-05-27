@@ -1,5 +1,5 @@
 # authen-template
-A Authentication Application Template Which are using react and nestjs 
+An Authentication Application Template for using react and nestjs 
 
 ## Client Installation
 
@@ -21,7 +21,7 @@ A Authentication Application Template Which are using react and nestjs
 ```
 
 ## Config settings ormconfig.json for connect MySQL
-Once the database has been configured, start the Nest App via ```npm run start:dev``` it automatically synchronizes the entities so ready to use. :heart_eyes_cat:
+Once the database has been configured, start the Nest App via ```npm run start:dev``` it automatically synchronizes the entities so ready to use.
 
 ```
 {
