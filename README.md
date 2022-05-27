@@ -49,28 +49,11 @@ Once the database has been configured, start the Nest App via ```npm run start:d
  }
 ```
 
-## Running migrations with typeorm
-
-```bash
-   $ ts-node node_modules/.bin/typeorm migration:run
-```
-
-or
-
-```bash
-   $ node_modules/.bin/typeorm migration:run
-```
 ## Running the app
 
 ```bash
-    # development
     $ npm run start
-
-    # watch mode
     $ npm run start:dev
-
-    # production mode
-    $ npm run start:prod
 ```
 ## Url Client Site
 ```
