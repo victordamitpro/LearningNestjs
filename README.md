@@ -59,7 +59,7 @@ or
 
 ```bash
    $ node_modules/.bin/typeorm migration:run
-
+```
 ## Running the app
 
 ```bash
@@ -79,6 +79,6 @@ http://127.0.0.1:3000/login
 ## Url Swagger for Api Documentation
 ```
 http://127.0.0.1:5001/api/doc
-
+```
 ## Docker
 
