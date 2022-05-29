@@ -1,7 +1,14 @@
-import { Controller, Post, Body, Res, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Res,
+  HttpStatus,
+  HttpException,
+} from '@nestjs/common';
 import { RegisterService } from './register.service';
-import { RegisterUserDto } from './dto/register-user.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { RegisterUserDto } from './dto/register.dto';
 
 @ApiTags('auth')
 @Controller('auth/register')
@@ -21,6 +28,12 @@ export class RegisterController {
         status: 200,
       });
     } catch (err) {
+      if (err instanceof HttpException) {
+        return res.status(HttpStatus.BAD_REQUEST).json({
+          message: err.getResponse(),
+          status: 400,
+        });
+      }
       return res.status(HttpStatus.BAD_REQUEST).json({
         message: 'Error: User not registration!',
         status: 400,

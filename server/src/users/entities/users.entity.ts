@@ -1,31 +1,36 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Exclude } from 'class-transformer';
+import { BaseEntity } from 'src/shared/base.entity';
+import { Column, Entity } from 'typeorm';
 
-@Entity()
-export class Users {
-  @PrimaryGeneratedColumn()
-  id: number;
+@Entity('users')
+export class Users extends BaseEntity {
+  @Column({ type: 'varchar', length: 250, nullable: true })
+  firstName: string;
 
-  @Column({ length: 250 })
-  firstname: string;
-
-  @Column({ length: 250 })
-  lastname: string;
+  @Column({ type: 'varchar', length: 250, nullable: true })
+  lastName: string;
 
   @Column({
-    unique: true,
+    type: 'varchar',
     length: 250,
+    nullable: true,
   })
-  username: string;
+  userName: string;
 
   @Column({
+    type: 'varchar',
     unique: true,
     length: 100,
   })
   email: string;
 
-  @Column({ length: 250 })
+  @Column({ length: 250, nullable: true })
   phone: string;
 
-  @Column({ length: 100 })
+  @Exclude({ toPlainOnly: true })
+  @Column({ length: 100, nullable: true })
   password: string;
+
+  @Column({ length: 500, nullable: true })
+  googleId: string;
 }

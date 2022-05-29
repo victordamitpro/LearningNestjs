@@ -1,8 +1,7 @@
+import { UserDto } from 'src/users/dto/user.dto';
 import {
   Controller,
-  Put,
   Get,
-  Body,
   Res,
   Param,
   UseGuards,
@@ -11,8 +10,8 @@ import {
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { AuthGuard } from '@nestjs/passport';
-import { IUsers } from './interfaces/users.interface';
 import { ApiTags } from '@nestjs/swagger';
+import { UserProfileDto } from './dto/user.profile.dto';
 
 @ApiTags('users')
 @UseGuards(AuthGuard('jwt'))
@@ -20,19 +19,20 @@ import { ApiTags } from '@nestjs/swagger';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Get('/:userId/profile')
+  @UseGuards(AuthGuard('jwt'))
+  @Get('/:id/profile')
   public async getUser(
     @Res() res,
-    @Param('userId') userId: number,
-  ): Promise<IUsers> {
-    const user = await this.usersService.findById(userId);
+    @Param('id') id: string,
+  ): Promise<UserProfileDto> {
+    const user = await this.usersService.findByUid(id);
 
     if (!user) {
       throw new NotFoundException('User does not exist.');
     }
 
     return res.status(HttpStatus.OK).json({
-      user: user,
+      user: UserProfileDto.toDto(user),
       status: 200,
     });
   }

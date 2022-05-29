@@ -1,17 +1,23 @@
 {
   "type": "mysql",
-  "host": "localhost",
+  "host": "127.0.0.1",
   "port": 3306,
   "username": "root",
   "password": "1q2w3e4r",
-  "database": "login_template",
-  "synchronize": true,
-  "logging": false,
-  "entities": ["dist/**/*.entity.js"],
-  "migrations": ["dist/migrations/**/*.js"],
-  "subscribers": ["dist/subscriber/**/*.js"],
+  "database": "auth_db",
+  "entities": [
+    "dist/**/*.entity{.ts,.js}"
+  ],
+  "migrationsTableName": "auth_migration_table",
+  "migrations": [
+    "dist/migrations/**/*{.ts,.js}"
+  ],
+  "subscribers": [
+    "dist/subscriber/**/*{.ts,.js}"
+  ],
   "cli": {
     "migrationsDir": "src/migrations",
     "subscribersDir": "src/subscriber"
-  }
+  },
+  "ssl": false
 }
