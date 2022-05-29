@@ -68,3 +68,17 @@ Config Google OAuth key in file .env
 GOOGLE_CLIENT_ID=MY_GOOGLE_CLIENT_ID
 GOOGLE_SECRET=MY_SECRET_KEY
 ```
+## Google Develop Credential Setup
+Authorized JavaScript origins
+```
+http://localhost:5001
+```
+Authorized redirect URIs
+```
+http://localhost:5001/api/auth/google/callback
+http://localhost:3000/api/auth/google/callback
+```
+
+
+
+
