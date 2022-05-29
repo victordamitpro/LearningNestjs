@@ -1,3 +1,4 @@
+import { RegisterService } from './../register/register.service';
 import { Module } from '@nestjs/common';
 import { LoginService } from './login.service';
 import { LoginController } from './login.controller';
@@ -7,6 +8,8 @@ import { JwtModule } from '@nestjs/jwt';
 import { UsersService } from '../users/users.service';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './strategies/jwt.strategy';
+import { GoogleStrategy } from './strategies/google.strategy';
+
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
@@ -25,7 +28,13 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       inject: [ConfigService],
     }),
   ],
-  providers: [LoginService, UsersService, JwtStrategy],
+  providers: [
+    LoginService,
+    RegisterService,
+    UsersService,
+    JwtStrategy,
+    GoogleStrategy,
+  ],
   controllers: [LoginController],
 })
 export class LoginModule {}

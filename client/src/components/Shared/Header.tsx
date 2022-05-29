@@ -1,10 +1,19 @@
 import { FC } from 'react';
-import { AppBar, Button, makeStyles, Toolbar } from '@material-ui/core';
+import {
+  AppBar,
+  Button,
+  makeStyles,
+  Toolbar,
+  Typography,
+} from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { currentUserState } from '../../stores/userStores';
+import { Colors } from '../../enums/ColorEnum';
 
 const useStyles = makeStyles(() => ({
   header: {
-    backgroundColor: '#70848b',
+    backgroundColor: Colors.Black,
   },
   logo: {
     fontFamily: 'Work Sans, sans-serif',
@@ -22,46 +31,79 @@ const useStyles = makeStyles(() => ({
     display: 'flex',
     justifyContent: 'space-between',
   },
+  welcome: {
+    display: 'flex',
+    paddingBottom: 5,
+    color: Colors.White,
+    fontFamily: 'Open Sans, sans-serif',
+    fontWeight: 700,
+    marginLeft: '38px',
+    size: '18px',
+  },
+  xs4: {
+    display: 'flex',
+    width: '20%',
+  },
+  xs8: {
+    display: 'flex',
+    width: '80%',
+    justifyContent: 'end',
+  },
 }));
 
 const headersData = [
   {
+    id: 1,
     label: 'Logout',
   },
 ];
 
 const Header: FC = () => {
-  const { header, logo, menuButton } = useStyles();
+  const { header, logo, menuButton, welcome, xs4, xs8 } = useStyles();
+  const [userState, setUserState] = useRecoilState(currentUserState);
   const navigate = useNavigate();
 
   const render = () => {
     return (
-      <Toolbar>
+      <Toolbar className={logo}>
         {logoText}
-        <div>{isAuthenticated() && getMenuButtons()}</div>
+        <div className={xs4}>{isAuthenticated() && getUserInfo()}</div>
+        <div className={xs8}>{isAuthenticated() && getMenuButtons()}</div>
       </Toolbar>
     );
   };
 
   const isAuthenticated = () => {
-    return localStorage.getItem('AccessToken');
+    return userState;
   };
 
   const handleLogout = () => {
     localStorage.removeItem('AccessToken');
+    localStorage.removeItem('User');
+    setUserState(null);
     navigate('/login');
   };
 
+  const getUserInfo = () => {
+    return (
+      <Typography className={welcome}>
+        {`Hi ${userState?.firstName} ${userState?.lastName} !`}
+      </Typography>
+    );
+  };
+
   const getMenuButtons = () => {
-    return headersData.map(({ label }) => {
+    return headersData.map(({ id, label }) => {
       return (
-        <Button
-          color="inherit"
-          className={menuButton}
-          onClick={() => handleLogout()}
-        >
-          {label}
-        </Button>
+        <div key={id}>
+          <Button
+            color="inherit"
+            className={menuButton}
+            onClick={() => handleLogout()}
+          >
+            {label}
+          </Button>
+        </div>
       );
     });
   };

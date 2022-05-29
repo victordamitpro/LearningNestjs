@@ -1,19 +1,19 @@
-import { Users } from 'src/users/entities/users.entity';
+import { UserDto } from 'src/users/dto/user.dto';
+import { ApiProperty } from '@nestjs/swagger';
+import { Exclude, instanceToPlain, plainToInstance } from 'class-transformer';
 import {
   MaxLength,
   IsNotEmpty,
-  IsEmail,
   IsString,
+  IsEmail,
   IsPhoneNumber,
-  IsOptional,
   MinLength,
+  IsOptional,
 } from 'class-validator';
-import { Exclude, instanceToPlain, plainToInstance } from 'class-transformer';
-import { ApiProperty } from '@nestjs/swagger';
+import { Users } from 'src/users/entities/users.entity';
 
-export class UserDto {
-  @IsOptional()
-  readonly id: string;
+export class RegisterUserDto {
+  readonly id: number;
 
   @ApiProperty({
     description: 'The first name of user',
@@ -70,29 +70,20 @@ export class UserDto {
   @IsString()
   @MaxLength(20)
   @IsPhoneNumber()
-  readonly phone: string;
+  phone: string;
 
   @ApiProperty({
     description: 'The password of user',
     maxLength: 100,
     type: String,
   })
-  @Exclude({ toPlainOnly: true })
+  @IsNotEmpty()
   @IsString()
   @MaxLength(100)
   password: string;
 
-  @IsOptional()
-  @IsString()
-  googleId: string;
-
-  public static toEntity(dto: Partial<UserDto>): Users {
+  public static toEntity(dto: Partial<RegisterUserDto>): Users {
     const data = instanceToPlain(dto);
     return plainToInstance(Users, data);
-  }
-
-  public static toDto(entity: Users): UserDto {
-    const data = instanceToPlain(entity, { ignoreDecorators: true });
-    return plainToInstance(UserDto, data);
   }
 }

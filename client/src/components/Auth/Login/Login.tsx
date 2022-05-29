@@ -25,6 +25,9 @@ import CombineClassName from 'classnames';
 import { Colors } from '../../../enums/ColorEnum';
 import { Alert } from '@material-ui/lab';
 import { IResponeModel } from '../../../Models/IResponeModel';
+import { useSetRecoilState } from 'recoil';
+import { currentUserState } from '../../../stores/userStores';
+import { ICurrentUserModel } from '../../../Models/ICurrentUserModel';
 
 const schema = Joi.object({
   email: Joi.string()
@@ -68,6 +71,7 @@ const Login: FC = () => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
   const [err, setErr] = useState<IResponeModel>({ message: '', status: 200 });
+  const setCurrentUser = useSetRecoilState(currentUserState);
   const navigate = useNavigate();
   const { mutateAsync: loginMutate } = useMutation(
     (_loginRequest: ILoginModel) => loginAsync(_loginRequest),
@@ -106,7 +110,23 @@ const Login: FC = () => {
       setLoading(true);
       var response = await loginMutate(loginForm);
       if (response.status === HttpStatusEnum.OK) {
-        localStorage.setItem('AccessToken', JSON.stringify(response));
+        const user = {
+          id: response.user.id || '',
+          firstName: response.user?.firstName,
+          lastName: response.user?.lastName,
+          userName: response.user?.userName,
+          email: response.user?.email || '',
+        } as ICurrentUserModel;
+        localStorage.setItem(
+          'AccessToken',
+          JSON.stringify({
+            accessToken: response.accessToken,
+            expiresIn: 3600,
+            createAt: new Date(),
+          }),
+        );
+        localStorage.setItem('User', JSON.stringify(user));
+        setCurrentUser(user);
         navigate('/home');
       }
     }
@@ -214,7 +234,6 @@ const Login: FC = () => {
                     style={{
                       background: isButtonDisabled ? Colors.Gray : Colors.Blue,
                     }}
-                    type="submit"
                     onClick={handleLogin}
                     disabled={isButtonDisabled}
                     className={commonClass.btn}
@@ -244,7 +263,7 @@ const Login: FC = () => {
                       background: Colors.Red,
                     }}
                     className={commonClass.btn}
-                    href="/auth/google"
+                    href="api/auth/google/"
                   >
                     <img
                       src="https://viact.net/google-white.89b8fbb5.svg"

@@ -3,12 +3,11 @@ POST http://localhost:5001/api/auth/register
 content-type: application/json
 
 {
-    "email": "test@test.com",
+    "email": "test5@test.com",
     "password": "123456",
-    "firstname": "hoang1",
-    "lastname": "dt1",
-    "username": "hoangdt1dxs",
-    "phone": "+84915252698"
+    "firstName": "hoang1",
+    "lastName": "dt1",
+    "userName": "hoangdt1dxs"
 }
 
 
@@ -21,3 +20,9 @@ content-type: application/json
     "email": "test1@test.com",
     "password": "123456"
 }
+
+### Get user profile
+
+GET http://localhost:5001/api/users/057b1994-2cfa-4a3a-849b-cdbc6a1867fd/profile
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QxQHRlc3QuY29tIiwiaWF0IjoxNjUzNzk4ODczLCJleHAiOjE2NTM4MDI0NzN9.KFYNRSaNAkPWmW5tJwcN83bx6Y402s9tylfC4Ixgxvs
