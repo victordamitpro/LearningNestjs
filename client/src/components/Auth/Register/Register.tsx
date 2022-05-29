@@ -52,7 +52,7 @@ const schema = Joi.object({
     .required()
     .label('Confirm password')
     .options({ messages: { 'any.only': '{{#label}} does not match' } }),
-  firstname: Joi.string()
+  firstName: Joi.string()
     .required()
     .trim()
     .max(250)
@@ -62,7 +62,7 @@ const schema = Joi.object({
       'string.trim': 'Last name must not be empty',
       'any.required': 'Last name must not be empty',
     }),
-  lastname: Joi.string().required().trim().max(250).label('LastName').messages({
+  lastName: Joi.string().required().trim().max(250).label('LastName').messages({
     'string.empty': 'First name must not be empty',
     'string.trim': 'First name must not be empty',
     'any.required': 'First name must not be empty',
@@ -70,7 +70,7 @@ const schema = Joi.object({
   phone: Joi.string()
     .regex(/^[0-9]{10}$/)
     .messages({ 'string.pattern.base': `Phone number must have 10 digits.` }),
-  username: Joi.string().required().trim().max(250).label('UserName').messages({
+  userName: Joi.string().required().trim().max(250).label('UserName').messages({
     'string.empty': 'User name must not be empty',
     'string.trim': 'User name must not be empty',
     'any.required': 'User name must not be empty',
@@ -82,10 +82,10 @@ const Register = () => {
     email: '',
     password: '',
     confirmpassword: '',
-    firstname: '',
-    lastname: '',
+    firstName: '',
+    lastName: '',
     phone: '',
-    username: '',
+    userName: '',
   } as IRegisterModel;
 
   const classnames = style();
@@ -143,11 +143,11 @@ const Register = () => {
     if (!registerFormError) {
       setLoading(true);
       var request = {
-        firstname: registerForm.firstname,
-        lastname: registerForm.lastname,
+        firstName: registerForm.firstName,
+        lastName: registerForm.lastName,
         email: registerForm.email,
         password: registerForm.password,
-        username: registerForm.username,
+        userName: registerForm.userName,
         phone: registerForm.phone,
       };
       var response = await registerMutate(request);
@@ -193,12 +193,12 @@ const Register = () => {
                   onChange={(value) => {
                     const newForm = {
                       ...registerForm,
-                      firstname: value.target.value,
+                      firstName: value.target.value,
                     };
                     setRegisterForm(newForm);
                   }}
-                  error={getErrorMessage('firstname').length > 0}
-                  helperText={getErrorMessage('firstname')}
+                  error={getErrorMessage('firstName').length > 0}
+                  helperText={getErrorMessage('firstName')}
                 />
                 <TextField
                   label={labelStar('Last Name')}
@@ -208,12 +208,12 @@ const Register = () => {
                   onChange={(value) => {
                     const newForm = {
                       ...registerForm,
-                      lastname: value.target.value,
+                      lastName: value.target.value,
                     };
                     setRegisterForm(newForm);
                   }}
-                  error={getErrorMessage('lastname').length > 0}
-                  helperText={getErrorMessage('lastname')}
+                  error={getErrorMessage('lastName').length > 0}
+                  helperText={getErrorMessage('lastName')}
                 />
                 <TextField
                   label={labelStar('Username')}
@@ -223,12 +223,12 @@ const Register = () => {
                   onChange={(value) => {
                     const newForm = {
                       ...registerForm,
-                      username: value.target.value,
+                      userName: value.target.value,
                     };
                     setRegisterForm(newForm);
                   }}
-                  error={getErrorMessage('username').length > 0}
-                  helperText={getErrorMessage('username')}
+                  error={getErrorMessage('userName').length > 0}
+                  helperText={getErrorMessage('userName')}
                 />
                 <TextField
                   label={labelStar('Email')}

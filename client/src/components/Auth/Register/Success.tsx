@@ -3,6 +3,7 @@ import { PropsWithChildren } from 'react';
 import styles from '../Styles/Style';
 import HeaderLogo from '../Login/HeaderLogo';
 import { Colors } from '../../../enums/ColorEnum';
+import { useNavigate } from 'react-router-dom';
 
 interface SuccessProps {
   visible: boolean;
@@ -25,6 +26,7 @@ function Success({
   children,
 }: PropsWithChildren<SuccessProps>) {
   const classnames = styles();
+  const navigate = useNavigate();
   return (
     <Dialog
       scroll="body"
@@ -67,7 +69,7 @@ function Success({
                 marginTop: 20,
                 color: Colors.Gray,
               }}
-              onClick={() => window.open('https://viact.net/', '_self')}
+              onClick={() => navigate('/login')}
             >
               {secondaryActionText ?? 'back to home'}
             </Button>

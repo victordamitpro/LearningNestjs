@@ -69,7 +69,6 @@ export class UserDto {
   @IsOptional()
   @IsString()
   @MaxLength(20)
-  @IsPhoneNumber()
   readonly phone: string;
 
   @ApiProperty({

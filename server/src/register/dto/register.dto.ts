@@ -1,6 +1,5 @@
-import { UserDto } from 'src/users/dto/user.dto';
 import { ApiProperty } from '@nestjs/swagger';
-import { Exclude, instanceToPlain, plainToInstance } from 'class-transformer';
+import { instanceToPlain, plainToInstance } from 'class-transformer';
 import {
   MaxLength,
   IsNotEmpty,
@@ -69,7 +68,6 @@ export class RegisterUserDto {
   @IsOptional()
   @IsString()
   @MaxLength(20)
-  @IsPhoneNumber()
   phone: string;
 
   @ApiProperty({
