@@ -1,5 +1,5 @@
 # authen-template
-A Authentication Application Template Which are using react and nestjs 
+An Authentication Application Template using react and nestjs 
 
 ## Client Installation
 
@@ -20,37 +20,20 @@ A Authentication Application Template Which are using react and nestjs
    $ cp .dev.example .env
 ```
 
-## Config settings ormconfig.json for connect MySQL
-Once the database has been configured, start the Nest App via ```npm run start:dev``` it automatically synchronizes the entities so ready to use. :heart_eyes_cat:
+## Config settings .env for connect MySQL
+Once the database has been configured, start the Nest App via ```npm run start:dev``` it automatically synchronizes the entities so ready to use.
 
 ```
-{
-    "type": "mysql",
-    "host": "localhost",
-    "port": 3306,
-    "username": "my_user",
-    "password": "my_password",
-    "database": "my_database",
-    "synchronize": true,
-    "logging": false,
-    "entities": [
-       "dist/**/*.entity.js"
-    ],
-    "migrations": [
-       "dist/migrations/**/*.js"
-    ],
-    "subscribers": [
-       "dist/subscriber/**/*.js"
-    ],
-    "cli": {
-       "migrationsDir": "src/migrations",
-       "subscribersDir": "src/subscriber"
-    }
- }
+MYSQL_HOST=MYSQL_HOST
+MYSQL_PORT=MYSQL_PORT
+MYSQL_USER=MYSQL_USER
+MYSQL_PASSWORD=MYSQL_PASSWORD
+MYSQL_DATABASE=MYSQL_DB
+
 ```
 
 ## Running migrations with typeorm
-```bash
+```
    $ npm run typeorm migration:run 
 ```
 
@@ -68,7 +51,7 @@ Once the database has been configured, start the Nest App via ```npm run start:d
 ```
 ## Url Client Site
 
-``bash
+```bash
 http://127.0.0.1:3000/login
 ```
 
@@ -76,6 +59,7 @@ http://127.0.0.1:3000/login
 
 ```bash
 http://127.0.0.1:5001/api/doc
+
 ```
 
 ## Google Auth
