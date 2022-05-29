@@ -23,8 +23,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import HeaderLogo from './HeaderLogo';
 import CombineClassName from 'classnames';
 import { Colors } from '../../../enums/ColorEnum';
-import { Alert } from '@material-ui/lab';
-import { IResponeModel } from '../../../Models/IResponeModel';
 import { useSetRecoilState } from 'recoil';
 import { currentUserState } from '../../../stores/userStores';
 import { ICurrentUserModel } from '../../../Models/ICurrentUserModel';
@@ -70,7 +68,6 @@ const Login: FC = () => {
   const loginFormError = useValidateForm(loginForm, schema);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [loading, setLoading] = useState(false);
-  const [err, setErr] = useState<IResponeModel>({ message: '', status: 200 });
   const setCurrentUser = useSetRecoilState(currentUserState);
   const navigate = useNavigate();
   const { mutateAsync: loginMutate } = useMutation(
@@ -144,22 +141,6 @@ const Login: FC = () => {
         <Card className={CombineClassName(classnames.card, commonClass.card)}>
           <CardContent>
             <HeaderLogo caption="LOGIN" title="Welcome Back" />
-            {err.status !== 200 && (
-              <Box className={commonClass.alertWrapper}>
-                <Alert
-                  icon={false}
-                  severity="error"
-                  className={commonClass.alert}
-                  style={{
-                    borderColor: '#CD4927',
-                  }}
-                >
-                  <span style={{ color: 'black', fontWeight: 700 }}>
-                    {err.message}
-                  </span>
-                </Alert>
-              </Box>
-            )}
             <Box className={classnames.formWrapper}>
               <form>
                 <TextField

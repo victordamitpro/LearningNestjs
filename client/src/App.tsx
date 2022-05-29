@@ -23,11 +23,10 @@ let routes = (
           path="/home"
           element={<ProtectedRoute outlet={<HomePage />} type="private" />}
         ></Route>
-        <Route path="/error" element={<ErrorPage />} />
-        <Route path="/error/400" element={<ErrorPage />} />
-        <Route path="/error/401" element={<ErrorPage />} />
-        <Route path="/error/404" element={<ErrorPage />} />
-        <Route path="/error/500" element={<ErrorPage />} />
+        <Route path="/error/400" element={<ErrorPage error={400} />} />
+        <Route path="/error/401" element={<ErrorPage error={401} />} />
+        <Route path="/error/404" element={<ErrorPage error={404} />} />
+        <Route path="/error/500" element={<ErrorPage error={500} />} />
       </Route>
       <Route element={<EmptyLayout />}>
         <Route path="login" element={<Login />} />

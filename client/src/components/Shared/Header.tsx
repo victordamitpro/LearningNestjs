@@ -81,6 +81,7 @@ const Header: FC = () => {
     localStorage.removeItem('AccessToken');
     localStorage.removeItem('User');
     setUserState(null);
+    console.log('/login');
     navigate('/login');
   };
 

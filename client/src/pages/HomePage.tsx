@@ -1,9 +1,8 @@
 import { Grid, makeStyles, Typography } from '@material-ui/core';
-import { FC } from 'react';
-import { useQuery } from 'react-query';
-import { useRecoilValue } from 'recoil';
+import { FC, useEffect, useState } from 'react';
+import { useSetRecoilState } from 'recoil';
 import { getUserProfileAsync } from '../apis/user';
-import { IUserProfileResponseModel } from '../Models/IUserProfileModel';
+import { IUserProfileModel } from '../Models/IUserProfileModel';
 import { currentUserState } from '../stores/userStores';
 
 const useStyles = makeStyles(() => ({
@@ -33,17 +32,36 @@ const useStyles = makeStyles(() => ({
     padding: 5,
   },
 }));
+
+const initModel = {
+  id: '',
+  firstName: '',
+  lastName: '',
+  userName: '',
+  email: '',
+  phone: '',
+};
+
 const HomePage: FC = () => {
-  const currentUserValue = useRecoilValue(currentUserState);
+  const user = localStorage.getItem('User');
   const classes = useStyles();
-  const { data: userProfileData, isFetching } =
-    useQuery<IUserProfileResponseModel>(
-      ['getEstateDetails', currentUserValue?.id],
-      () => getUserProfileAsync(currentUserValue?.id || ''),
-    );
-  if (isFetching) {
-    return <div>Loading...</div>;
-  }
+  const [userProfile, setUserProfile] = useState<IUserProfileModel>(initModel);
+  const setCurrentUserState = useSetRecoilState(currentUserState);
+
+  useEffect(() => {
+    if (user != null) {
+      var userInfo = JSON.parse(user);
+      const fetchData = async () => {
+        const data = await getUserProfileAsync(userInfo.id);
+
+        if (data) {
+          setUserProfile(data.user);
+          setCurrentUserState(data.user);
+        }
+      };
+      fetchData();
+    }
+  }, [user, setCurrentUserState]);
 
   return (
     <Grid container>
@@ -59,9 +77,7 @@ const HomePage: FC = () => {
           <Typography className={classes.textDesciption}>Id:</Typography>
         </Grid>
         <Grid item xs={4}>
-          <Typography className={classes.textInfo}>
-            {userProfileData?.user?.id}
-          </Typography>
+          <Typography className={classes.textInfo}>{userProfile.id}</Typography>
         </Grid>
       </Grid>
       <Grid container></Grid>
@@ -73,7 +89,7 @@ const HomePage: FC = () => {
         </Grid>
         <Grid item xs={4}>
           <Typography className={classes.textInfo}>
-            {userProfileData?.user?.firstName}
+            {userProfile.firstName}
           </Typography>
         </Grid>
       </Grid>
@@ -83,7 +99,7 @@ const HomePage: FC = () => {
         </Grid>
         <Grid item xs={4}>
           <Typography className={classes.textInfo}>
-            {userProfileData?.user?.lastName}
+            {userProfile.lastName}
           </Typography>
         </Grid>
       </Grid>
@@ -93,7 +109,7 @@ const HomePage: FC = () => {
         </Grid>
         <Grid item xs={4}>
           <Typography className={classes.textInfo}>
-            {userProfileData?.user?.email}
+            {userProfile.email}
           </Typography>
         </Grid>
       </Grid>

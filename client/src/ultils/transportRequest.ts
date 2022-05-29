@@ -3,7 +3,24 @@ import { validateTokenExpired } from './tokenHandle';
 
 const handleResponse = (response: Response) => {
   if (!response.ok) {
-    throw response;
+    const isUnauthorizedRequest =
+      response.status === 401 || response.status === 403;
+    if (isUnauthorizedRequest) history.push('/error/401');
+    switch (response.status) {
+      case 500:
+        history.push('/error/500');
+        break;
+      case 404:
+        history.push('/error/404');
+        break;
+      case 400:
+        history.push('/error/400');
+        break;
+      default:
+        throw response;
+    }
+
+    window.location.reload();
   }
 
   return parseJson(response);
@@ -21,16 +38,11 @@ const parseJson = async (response: Response) => {
 
 const headersWithToken = (): HeadersInit => {
   const result = JSON.parse(localStorage.getItem('AccessToken') || '{}');
-  if (
-    result.accessToken &&
-    validateTokenExpired(new Date(result.createAt), result.expiresIn)
-  ) {
-    localStorage.removeItem('AccessToken');
-    localStorage.removeItem('User');
-
-    throw Error('Token Expired');
+  if (Object.keys(result).length === 0) {
+    return {
+      'Content-Type': 'application/json',
+    };
   }
-
   return {
     Authorization: `Bearer ${result.accessToken}`,
     'Content-Type': 'application/json',

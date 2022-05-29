@@ -30,7 +30,7 @@ const RedirectPage: FC = () => {
       setCurrentUser(user);
       setTimeout(() => {
         navigate('/');
-      }, 1000);
+      }, 100);
     }
   }, [params.token, navigate, setCurrentUser]);
   return <></>;
