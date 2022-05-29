@@ -50,15 +50,8 @@ Once the database has been configured, start the Nest App via ```npm run start:d
 ```
 
 ## Running migrations with typeorm
-
 ```bash
-   $ ts-node node_modules/.bin/typeorm migration:run
-```
-
-or
-
-```bash
-   $ node_modules/.bin/typeorm migration:run
+   $ npm run typeorm migration:run 
 ```
 
 ## Running the app
@@ -85,5 +78,9 @@ http://127.0.0.1:3000/login
 http://127.0.0.1:5001/api/doc
 ```
 
-## Docker
-
+## Google Auth
+Config Google OAuth key in file .env
+```
+GOOGLE_CLIENT_ID=MY_GOOGLE_CLIENT_ID
+GOOGLE_SECRET=MY_SECRET_KEY
+```
