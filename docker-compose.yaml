@@ -2,7 +2,7 @@ version: "3.7"
 
 services:
   db:
-    build: 
+    build:
       context: ./database
     cap_add:
       - SYS_NICE
@@ -18,15 +18,15 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_TCP_PORT: ${MYSQL_PORT}
-    env_file: ./.env
+    env_file: ./server/docker.env
 
   back:
     depends_on:
       - db
-    build: 
+    build:
       context: ./server
       target: development
-    volumes: 
+    volumes:
       - ./server:/app
       - /app/node_modules
       - /app/dist
@@ -42,6 +42,8 @@ services:
     build:
       context: ./client
       target: development
+    environment:
+      - HOST=0.0.0.0
     stdin_open: true
     volumes:
       - ./client:/app
@@ -50,6 +52,8 @@ services:
     ports:
       - ${FRONTEND_PORT}:${FRONTEND_PORT}
     env_file: ./.env
+    links:
+      - "back"
 
 volumes:
   db_data: {}
