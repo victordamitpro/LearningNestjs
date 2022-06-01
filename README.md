@@ -49,6 +49,14 @@ MYSQL_DATABASE=MYSQL_DB
     # production mode
     $ npm run start:prod
 ```
+## Running with docker container
+```bash
+    # Start
+    $ docker-compose up -d
+
+    # Stop
+    $ docker-compose down
+```
 ## Url Client Site
 
 ```bash
